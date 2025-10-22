@@ -1,4 +1,3 @@
-
 {
   "studioName": "SUDY FILM STUDIO",
   "home": "Trang Chủ",
@@ -16,6 +15,7 @@
   "allProjects": "Tất Cả Dự Án",
   "pitch": "Tóm Tắt",
   "details": "Chi Tiết",
+  "viewProjectDetails": "Xem Chi Tiết Dự Án",
   "previousProject": "Dự án trước",
   "nextProject": "Dự án kế tiếp",
   "projectNav": "Dấu điều hướng dự án",

@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import type { Project } from '../types';
-import { PlayIcon } from './Icons';
+import { PlayIcon, InfoIcon } from './Icons';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ProjectCardProps {
   project: Project;
@@ -22,11 +22,11 @@ const getAspectRatioClass = (aspectRatio: string | undefined) => {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSelect }) => {
+    const { t } = useLanguage();
     const isActive = offset === 0;
     const absOffset = Math.abs(offset);
 
     const [isPlaying, setIsPlaying] = useState(false);
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         if (!isActive && isPlaying) {
@@ -37,6 +37,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSel
     const handlePlayClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         setIsPlaying(true);
+    };
+
+    const handleViewDetailsClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setIsPlaying(false);
+        onSelect();
     };
 
     const transform = `
@@ -76,10 +82,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSel
             }
         }
 
-        // Fallback for direct video links
         return (
             <video
-                ref={videoRef}
                 src={project.videoUrl}
                 autoPlay
                 controls
@@ -89,10 +93,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSel
         );
     };
 
-
     return (
         <div
-            className="absolute top-0 left-0 right-0 bottom-0 m-auto w-[450px] max-w-[90vw] h-auto"
+            className="absolute top-0 left-0 right-0 bottom-0 m-auto w-[300px] sm:w-[400px] md:w-[450px] max-w-[90vw] h-auto"
             style={cardStyle}
             onClick={isActive && !isPlaying ? onSelect : undefined}
         >
@@ -100,7 +103,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSel
                 ${isActive ? 'shadow-cyan-500/60' : 'shadow-black/70'} ${aspectRatioClass}`}>
                 
                 {isPlaying && project.videoUrl ? (
-                    renderVideoPlayer()
+                    <>
+                        {renderVideoPlayer()}
+                        <button
+                            onClick={handleViewDetailsClick}
+                            className="absolute top-3 right-3 z-20 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30 text-white hover:bg-white/30 transition-all scale-100 hover:scale-110"
+                            aria-label={t('viewProjectDetails')}
+                        >
+                            <InfoIcon className="w-6 h-6" />
+                        </button>
+                    </>
                 ) : (
                     <>
                         <img src={project.image} alt={project.title} className="w-full h-full object-cover"/>

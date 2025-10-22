@@ -51,20 +51,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, setPro
     };
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen p-8">
-            <header className="flex justify-between items-center mb-8 pb-4 border-b border-gray-700">
-                <div>
-                    <h1 className="font-orbitron text-3xl font-bold tracking-wider">Admin Dashboard</h1>
-                    <p className="text-gray-400">Manage your film projects.</p>
+        <div className="bg-gray-900 text-white min-h-screen p-4 sm:p-8">
+            <header className="flex flex-col sm:flex-row justify-between sm:items-center mb-8 pb-4 border-b border-gray-700">
+                <div className="mb-4 sm:mb-0">
+                    <h1 className="font-orbitron text-2xl sm:text-3xl font-bold tracking-wider">Admin Dashboard</h1>
+                    <p className="text-gray-400 text-sm sm:text-base">Manage your film projects.</p>
                 </div>
-                <div>
+                <div className="flex items-center space-x-4">
                     <button
                         onClick={() => window.location.hash = '#'}
-                        className="bg-transparent border-none p-0 text-gray-400 hover:text-white mr-6 transition-colors cursor-pointer"
+                        className="bg-transparent border-none p-0 text-gray-400 hover:text-white transition-colors cursor-pointer text-sm"
                     >
                         View Live Site
                     </button>
-                    <button onClick={onLogout} className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    <button onClick={onLogout} className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">
                         Logout
                     </button>
                 </div>
@@ -77,33 +77,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ projects, setPro
             </div>
 
             <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-gray-700/50">
-                        <tr>
-                            <th className="p-4 font-semibold">Thumbnail</th>
-                            <th className="p-4 font-semibold">Title</th>
-                            <th className="p-4 font-semibold">Status</th>
-                            <th className="p-4 font-semibold text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {projects.map(project => (
-                            <tr key={project.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/30">
-                                <td className="p-4">
-                                    <img src={project.image} alt={project.title} className="w-24 h-16 object-cover rounded-md"/>
-                                </td>
-                                <td className="p-4 font-orbitron font-bold">{project.title}</td>
-                                <td className="p-4">
-                                    <span className="bg-gray-600 text-gray-300 text-xs font-semibold px-2 py-1 rounded-full">{project.status}</span>
-                                </td>
-                                <td className="p-4 text-right">
-                                    <button onClick={() => setEditingProject(project)} className="text-cyan-400 hover:text-cyan-300 font-semibold mr-4">Edit</button>
-                                    <button onClick={() => handleDeleteProject(project.id)} className="text-red-500 hover:text-red-400 font-semibold">Delete</button>
-                                </td>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left min-w-[600px]">
+                        <thead className="bg-gray-700/50">
+                            <tr>
+                                <th className="p-4 font-semibold">Thumbnail</th>
+                                <th className="p-4 font-semibold">Title</th>
+                                <th className="p-4 font-semibold">Status</th>
+                                <th className="p-4 font-semibold text-right">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {projects.map(project => (
+                                <tr key={project.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/30">
+                                    <td className="p-4">
+                                        <img src={project.image} alt={project.title} className="w-24 h-16 object-cover rounded-md"/>
+                                    </td>
+                                    <td className="p-4 font-orbitron font-bold">{project.title}</td>
+                                    <td className="p-4">
+                                        <span className="bg-gray-600 text-gray-300 text-xs font-semibold px-2 py-1 rounded-full">{project.status}</span>
+                                    </td>
+                                    <td className="p-4 text-right">
+                                        <button onClick={() => setEditingProject(project)} className="text-cyan-400 hover:text-cyan-300 font-semibold mr-4">Edit</button>
+                                        <button onClick={() => handleDeleteProject(project.id)} className="text-red-500 hover:text-red-400 font-semibold">Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {editingProject && (

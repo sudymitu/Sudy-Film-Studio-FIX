@@ -1,4 +1,3 @@
-
 {
   "studioName": "SUDY FILM STUDIO",
   "home": "Home",
@@ -16,6 +15,7 @@
   "allProjects": "All Projects",
   "pitch": "Pitch",
   "details": "Details",
+  "viewProjectDetails": "View Project Details",
   "previousProject": "Previous project",
   "nextProject": "Next project",
   "projectNav": "Project navigation dots",
