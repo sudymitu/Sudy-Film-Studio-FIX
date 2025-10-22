@@ -56,6 +56,40 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSel
     
     const aspectRatioClass = getAspectRatioClass(project.thumbnailAspectRatio);
 
+    const renderVideoPlayer = () => {
+        if (!project.videoUrl) return null;
+
+        const isVimeo = project.videoUrl.includes('vimeo.com');
+        if (isVimeo) {
+            const videoIdMatch = project.videoUrl.match(/vimeo.com\/(\d+)/);
+            if (videoIdMatch) {
+                const videoId = videoIdMatch[1];
+                return (
+                    <iframe
+                        src={`https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`}
+                        className="w-full h-full"
+                        frameBorder="0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                );
+            }
+        }
+
+        // Fallback for direct video links
+        return (
+            <video
+                ref={videoRef}
+                src={project.videoUrl}
+                autoPlay
+                controls
+                className="w-full h-full object-cover"
+                onEnded={() => setIsPlaying(false)}
+            />
+        );
+    };
+
+
     return (
         <div
             className="absolute top-0 left-0 right-0 bottom-0 m-auto w-[450px] max-w-[90vw] h-auto"
@@ -66,14 +100,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, offset, onSel
                 ${isActive ? 'shadow-cyan-500/60' : 'shadow-black/70'} ${aspectRatioClass}`}>
                 
                 {isPlaying && project.videoUrl ? (
-                    <video
-                        ref={videoRef}
-                        src={project.videoUrl}
-                        autoPlay
-                        controls
-                        className="w-full h-full object-cover"
-                        onEnded={() => setIsPlaying(false)}
-                    />
+                    renderVideoPlayer()
                 ) : (
                     <>
                         <img src={project.image} alt={project.title} className="w-full h-full object-cover"/>

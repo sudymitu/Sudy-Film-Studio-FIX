@@ -14,7 +14,7 @@ export const getDefaultProjects = (t: TFunction): Project[] => [
     pitch: t('pinkIslePitch'),
     details: t('pinkIsleDetails'),
     status: t('statusInProduction'),
-    videoUrl: 'https://drive.google.com/uc?export=download&id=16md4u2Hktxzz1cazcsBJFRm2MPO6TMJA',
+    videoUrl: 'https://vimeo.com/1129615682?fl=ip&fe=ec',
     thumbnailAspectRatio: '4:3',
     backgroundAspectRatio: '16:9',
   },
